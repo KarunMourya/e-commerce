@@ -26,17 +26,18 @@ if (config.use_env_variable) {
 }
 
 // Auto-load all models
-fs.readdirSync(__dirname)
-  .filter(
-    (file) =>
-      file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
-  )
-  .forEach(async (file) => {
-    const model = await import(path.join(__dirname, file)).then((m) =>
-      m.default(sequelize, Sequelize.DataTypes)
-    );
+for (const file of fs.readdirSync(__dirname)) {
+  if (
+    file.indexOf(".") !== 0 &&
+    file !== basename &&
+    file.slice(-3) === ".js"
+  ) {
+    const module = await import(path.join(__dirname, file));
+    const model = module.default(sequelize, Sequelize.DataTypes);
     db[model.name] = model;
-  });
+  }
+}
+
 
 // Setup associations
 Object.keys(db).forEach((modelName) => {
