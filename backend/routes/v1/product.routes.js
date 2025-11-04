@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  bulkUploadProductsController,
   createProductController,
   deleteProductController,
   getProductController,
@@ -10,6 +11,7 @@ import {
 import { authorizeUser } from "../../middlewares/auth.middleware.js";
 import Joi from "joi";
 import { validate } from "../../middlewares/validators.middleware.js";
+import uploadMiddleware from "../../middlewares/upload.middleware.js";
 
 export const productSchema = Joi.object({
   name: Joi.string()
@@ -53,8 +55,6 @@ router.get("/:id", authorizeUser, getProductController);
 router.put("/:id", authorizeUser,validate(productSchema), updateProductController);
 router.delete("/:id", authorizeUser, deleteProductController);
 
-// router.post("/bulk/upload", authorizeUser, bulkUploadProducts);
-
-// router.get("/export", authorizeUser, exportProductsReport);
+router.post("/bulk-upload",authorizeUser, uploadMiddleware, bulkUploadProductsController);
 
 export default router;

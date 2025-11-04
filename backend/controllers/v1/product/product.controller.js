@@ -4,7 +4,8 @@ import {
   createProductService,
   deleteProductService,
   productListService,
-  updateProductService 
+  updateProductService, 
+  bulkUploadProductService
 } from "../../../services/v1/product.service.js";
 
 export async function createProductController(request, response, next) {
@@ -75,6 +76,29 @@ export const getProductController = async (_request, response,next) => {
       data: product,
     });
 
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const bulkUploadProductsController = async (request, response, next) => {
+  try {
+    const filePath = request.file?.path;
+
+    if (!filePath) {
+      return response.status(STATUS_CODE.BAD_REQUEST).json({
+        success: false,
+        message: STATUS_MESSAGE.FILE_IS_REQUIRED,
+      });
+    }
+
+    const jobId = await bulkUploadProductService(filePath);
+
+    return response.status(STATUS_CODE.SUCCESS).json({
+      success: true,
+      message: STATUS_MESSAGE.BULK_UPLOAD_QUEUED,
+      jobId,
+    });
   } catch (error) {
     next(error);
   }

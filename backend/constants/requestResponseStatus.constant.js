@@ -45,6 +45,10 @@ export const STATUS_MESSAGE = {
   INVALID_PAYLOAD: "Invalid request payload",
   MISSING_FIELDS: "Required fields missing",
   INVALID_ID: "Invalid ID provided",
+
+  FILE_IS_REQUIRED: "File is required",
+  BULK_UPLOAD_QUEUED: "Bulk upload queued",
+  JOB_NOT_DONE: "Job not found"
 };
 
 export const PAGINATION = {

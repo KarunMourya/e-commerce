@@ -6,6 +6,7 @@ import {
   SORT_OPTIONS,
 } from "../../constants/requestResponseStatus.constant.js";
 import { Op } from "sequelize";
+import { productBulkQueue } from "../../queues/product.queue.js";
 
 const Product = db.Product;
 const Category = db.Category;
@@ -99,4 +100,9 @@ export const getProductService = async (productId) => {
   }
 
   return product;
+};
+
+export const bulkUploadProductService = async (filePath) => {
+  const job = await productBulkQueue.add("bulk-upload", { filePath });
+  return job.id;
 };

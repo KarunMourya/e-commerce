@@ -6,6 +6,7 @@ import { requestuestLogger } from './middlewares/request.logger.middleware.js';
 import authRoutes from './routes/auth.routes.js';
 import v1Routes from './routes/v1/index.js'
 import { errorHandler } from './middlewares/error.middleware.js';
+import "./workers/productBulk.worker.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
