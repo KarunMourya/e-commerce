@@ -1,3 +1,4 @@
+import { Parser } from "json2csv";
 import db from "../../models/index.js";
 import {
   STATUS_CODE,
@@ -93,7 +94,7 @@ export async function productListService(query) {
 }
 
 export const getProductService = async (productId) => {
-  const product = await Product.findById(productId);
+  const product = await Product.findByPk(productId);
 
   if (!product) {
     throw new Error(STATUS_MESSAGE.PRODUCT_NOT_FOUND);
@@ -105,4 +106,24 @@ export const getProductService = async (productId) => {
 export const bulkUploadProductService = async (filePath) => {
   const job = await productBulkQueue.add("bulk-upload", { filePath });
   return job.id;
+};
+
+export const exportProductsService = async () => {
+  const products = await Product.findAll({
+    include: [{ model: Category, as: 'category', attributes: ["name"] }],
+    raw: true,
+  });
+
+  const fields = [
+    "id",
+    "name",
+    "image",
+    "price",
+    "category.name",
+  ];
+
+  const parser = new Parser({ fields });
+  const csv = parser.parse(products);
+
+  return { csv };
 };

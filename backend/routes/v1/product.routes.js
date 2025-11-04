@@ -3,6 +3,7 @@ import {
   bulkUploadProductsController,
   createProductController,
   deleteProductController,
+  exportProductsReport,
   getProductController,
   productListController,
   updateProductController
@@ -56,5 +57,8 @@ router.put("/:id", authorizeUser,validate(productSchema), updateProductControlle
 router.delete("/:id", authorizeUser, deleteProductController);
 
 router.post("/bulk-upload",authorizeUser, uploadMiddleware, bulkUploadProductsController);
+
+router.get("/document/export-products", exportProductsReport);
+
 
 export default router;

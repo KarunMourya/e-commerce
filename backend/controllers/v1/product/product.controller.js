@@ -5,7 +5,8 @@ import {
   deleteProductService,
   productListService,
   updateProductService, 
-  bulkUploadProductService
+  bulkUploadProductService,
+  exportProductsService
 } from "../../../services/v1/product.service.js";
 
 export async function createProductController(request, response, next) {
@@ -64,9 +65,9 @@ export async function productListController(request, response, next) {
   }
 }
 
-export const getProductController = async (_request, response,next) => {
+export const getProductController = async (request, response,next) => {
   try {
-    const id = req.params.id;
+    const id = request.params.id;
 
     const product = await getProductService(id);
 
@@ -99,6 +100,21 @@ export const bulkUploadProductsController = async (request, response, next) => {
       message: STATUS_MESSAGE.BULK_UPLOAD_QUEUED,
       jobId,
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+export const exportProductsReport = async (_request, response, next) => {
+  try {
+    const { csv } = await exportProductsService();
+
+    response.setHeader("Content-Disposition", "attachment; filename=products.csv");
+    response.setHeader("Content-Type", "text/csv");
+
+    return response.status(STATUS_CODE.SUCCESS).end(csv);
+
   } catch (error) {
     next(error);
   }
