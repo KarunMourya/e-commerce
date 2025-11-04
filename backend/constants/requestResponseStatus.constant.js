@@ -21,7 +21,6 @@ export const STATUS_MESSAGE = {
   UNAUTHORIZED: "Unauthorized access",
   FORBIDDEN: "Forbidden",
   NOT_FOUND: "Resource not found",
-
   SERVER_ERROR: "Internal server error",
 
   LOGIN_SUCCESS: "Login successful",
@@ -30,6 +29,22 @@ export const STATUS_MESSAGE = {
   INVALID_CREDENTIALS: "Invalid credentials",
   TOKEN_MISSING: "Token missing",
   TOKEN_INVALID: "Invalid token",
+
+  CATEGORY_NOT_FOUND: "Category not found",
+  CATEGORY_EXISTS: "Category already exists",
+  CATEGORY_CREATE_SUCCESS: "Category created successfully",
+  CATEGORY_UPDATE_SUCCESS: "Category updated successfully",
+  CATEGORY_DELETE_SUCCESS: "Category deleted successfully",
+
+  PRODUCT_NOT_FOUND: "Product not found",
+  PRODUCT_EXISTS: "Product already exists",
+  PRODUCT_CREATE_SUCCESS: "Product created successfully",
+  PRODUCT_UPDATE_SUCCESS: "Product updated successfully",
+  PRODUCT_DELETE_SUCCESS: "Product deleted successfully",
+
+  INVALID_PAYLOAD: "Invalid request payload",
+  MISSING_FIELDS: "Required fields missing",
+  INVALID_ID: "Invalid ID provided",
 };
 
 export const PAGINATION = {
@@ -40,6 +55,9 @@ export const PAGINATION = {
 export const SORT_OPTIONS = {
   PRICE_ASC: "price_asc",
   PRICE_DESC: "price_desc",
+
+  NAME_ASC: 'name_asc',
+  NAME_DESC: 'name_desc'
 };
 
 export const TOKEN = {

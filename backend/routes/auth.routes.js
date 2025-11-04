@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { register, login } from "../controllers/auth.controller.js";
 import Joi from "joi";
-import { validate } from "../middlewares/auth.validators.middleware.js";
+import { validate } from "../middlewares/validators.middleware.js";
 
 export const registerSchema = Joi.object({
   name: Joi.string().required().messages({
