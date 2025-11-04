@@ -6,11 +6,11 @@
 4. [Environment Setup](#environment-setup)
 5. [Running the Project](#running-the-project)
 6. [API Endpoints](#api-endpoints)
-   * Auth
-   * Category
-   * Product
-   * Bulk Upload
-   * Export
+    * [Auth](#auth)
+    * [Category](#category)
+    * [Product](#product)
+    * [Bulk Upload](#bulk-upload)
+    * [Export](#export)
 7. [Validation](#validation)
 8. [Pagination + Sorting](#pagination--sorting)
 9. [Error Handling](#error-handling)
