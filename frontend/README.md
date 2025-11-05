@@ -7,13 +7,13 @@ It’s built with **Angular** and connects to the backend REST API (`http://loca
 
 ## Features
 
-✅ User Authentication (Login / Signup with JWT)  
-✅ Protected Routes using `authGuard` and `guestGuard`  
-✅ Category Management (Add / Edit / Delete)  
-✅ Product Management (CRUD, Pagination, Sorting, Search)  
-✅ CSV **Export** and **Bulk Upload** for Products  
-✅ Fully Responsive Layout (Mobile & Desktop)  
-✅ Sidebar Navigation with Persistent State  
+* User Authentication (Login / Signup with JWT)  
+* Protected Routes using `authGuard` and `guestGuard`  
+* Category Management (Add / Edit / Delete)  
+* Product Management (CRUD, Pagination, Sorting, Search)  
+* CSV **Export** and **Bulk Upload** for Products  
+* Fully Responsive Layout (Mobile & Desktop)  
+* Sidebar Navigation with Persistent State  
 
 ---
 
