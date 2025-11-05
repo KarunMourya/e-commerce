@@ -1,0 +1,14 @@
+<nav class="sidebar" [class.open]="isOpen">
+  <div class="sidebar-header">
+    <h2 class="logo">Admin</h2>
+    <button class="hamburger" (click)="toggle.emit()">✕</button>
+  </div>
+
+  <ul>
+    <li><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
+    <li><a routerLink="/categories" routerLinkActive="active">Categories</a></li>
+    <li><a routerLink="/products" routerLinkActive="active">Products</a></li>
+  </ul>
+
+  <button class="logout-btn" (click)="logout()">Logout</button>
+</nav>

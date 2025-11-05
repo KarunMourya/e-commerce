@@ -1,0 +1,58 @@
+.layout {
+  display: flex;
+  height: 100vh;
+
+  .content {
+    flex: 1;
+    margin-left: 250px;
+    background: #fff;
+    color: #000;
+    overflow-y: auto;
+    transition: margin-left 0.3s ease;
+
+    .topbar {
+      display: none;
+      background: #000;
+      color: #fff;
+      padding: 10px 16px;
+      align-items: center;
+      justify-content: space-between;
+
+      h1 {
+        font-size: 1rem;
+        margin: 0;
+      }
+
+      .menu-btn {
+        background: transparent;
+        border: none;
+        color: #fff;
+        font-size: 24px;
+        cursor: pointer;
+      }
+    }
+
+    .page-content {
+      padding: 20px;
+    }
+  }
+}
+
+
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+
+    .content {
+      margin-left: 0;
+
+      .topbar {
+        display: flex; 
+      }
+
+      .page-content {
+        padding: 15px;
+      }
+    }
+  }
+}

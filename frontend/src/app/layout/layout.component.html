@@ -1,0 +1,14 @@
+<div class="layout">
+  <app-sidebar [isOpen]="isSidebarOpen" (toggle)="toggleSidebar()"></app-sidebar>
+
+  <main class="content">
+    <header class="topbar">
+      <button class="menu-btn" (click)="toggleSidebar()">☰</button>
+      <h1>Admin Panel</h1>
+    </header>
+
+    <section class="page-content">
+      <router-outlet></router-outlet>
+    </section>
+  </main>
+</div>

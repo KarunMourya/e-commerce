@@ -58,7 +58,9 @@ export async function productListController(request, response, next) {
     return response.status(STATUS_CODE.SUCCESS).json({
       success: true,
       message: STATUS_MESSAGE.SUCCESS,
-      data: result,
+      data: result.data,
+      pagination: result.pagination,
+
     });
   } catch (error) {
     next(error);

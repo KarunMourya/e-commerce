@@ -24,10 +24,10 @@ export async function getAllCategoriesService(query) {
     where.name = { [Op.iLike]: `%${search}%` };
   }
 
-  let order = [["createdAt", "DESC"]];
+  let order = [["createdAt", "ASC"]];
 
-  if (sort === SORT_OPTIONS.NAME_ASC) {
-    order = [["name", "ASC"]];
+  if (sort === SORT_OPTIONS.NAME_DESC) {
+    order = [["name", "DESC"]];
   }
 
   const { rows, count } = await Category.findAndCountAll({

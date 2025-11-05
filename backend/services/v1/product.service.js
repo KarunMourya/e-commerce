@@ -86,10 +86,13 @@ export async function productListService(query) {
   });
 
   return {
-    total: count,
-    page,
-    limit,
-    products: rows,
+    data: rows,
+    pagination: {
+      totalRecords: count,
+      currentPage: Number(page),
+      totalPages: Math.ceil(count / Number(limit)),
+      limit: Number(limit),
+    }
   };
 }
 

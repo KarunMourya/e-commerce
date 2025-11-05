@@ -1,0 +1,109 @@
+<div class="product-container">
+  <h2 class="page-title">Products</h2>
+
+  <form [formGroup]="productForm" (ngSubmit)="saveProduct()" class="product-form">
+    <div class="form-row">
+      <input type="text" formControlName="name" placeholder="Enter product name" />
+      <input type="number" formControlName="price" placeholder="Enter price" />
+      <input type="text" formControlName="image" placeholder="Image URL (optional)" />
+      <select formControlName="categoryId">
+        <option value="">Select Category</option>
+        <option *ngFor="let cat of categories" [value]="cat.id">{{ cat.name }}</option>
+      </select>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-primary">{{ selectedId ? 'Update' : 'Add' }}</button>
+      <button type="button" class="btn-secondary" (click)="resetForm()">Reset</button>
+    </div>
+  </form>
+
+  <div class="toolbar">
+    <div class="search-group">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (keyup.enter)="search()"
+        placeholder="Search by name..."
+      />
+      <button class="btn-primary" (click)="search()">Search</button>
+    </div>
+
+    <select [(ngModel)]="sortOrder" (change)="onSortChange()" class="sort-select">
+      <option value="">Sort by</option>
+      <option value="price_asc">Price (Low → High)</option>
+      <option value="price_desc">Price (High → Low)</option>
+    </select>
+  </div>
+
+  <table class="product-table" *ngIf="products.length > 0; else noData">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Image</th>
+        <th>Price</th>
+        <th>Category</th>
+        <th>Created</th>
+        <th>Updated</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let prod of products; let i = index">
+        <td>{{ i + 1 + (page - 1) * limit }}</td>
+        <td>{{ prod.name }}</td>
+        <td>
+          <img
+            [src]="prod.image || 'https://via.placeholder.com/50'"
+            alt="{{ prod.name }}"
+            class="prod-img"
+          />
+        </td>
+        <td>₹{{ prod.price }}</td>
+        <td>{{ prod.category?.name }}</td>
+        <td>{{ prod.createdAt | date: 'short' }}</td>
+        <td>{{ prod.updatedAt | date: 'short' }}</td>
+        <td>
+          <button class="btn-edit" (click)="editProduct(prod)">Edit</button>
+          <button class="btn-delete" (click)="deleteProduct(prod.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="product-card" *ngFor="let prod of products">
+    <div class="card-header">
+      <img
+        [src]="prod.image || 'https://via.placeholder.com/60'"
+        alt="{{ prod.name }}"
+        class="card-img"
+      />
+      <div>
+        <h4>{{ prod.name }}</h4>
+        <p class="price">₹{{ prod.price }}</p>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <p><strong>Category:</strong> {{ prod.category?.name }}</p>
+      <p><strong>Created:</strong> {{ prod.createdAt | date: 'short' }}</p>
+      <p><strong>Updated:</strong> {{ prod.updatedAt | date: 'short' }}</p>
+    </div>
+
+    <div class="card-actions">
+      <button class="btn-edit" (click)="editProduct(prod)">Edit</button>
+      <button class="btn-delete" (click)="deleteProduct(prod.id)">Delete</button>
+    </div>
+  </div>
+
+  <ng-template #noData>
+    <p class="no-data">No products found.</p>
+  </ng-template>
+
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button (click)="prevPage()" [disabled]="page === 1">Prev</button>
+    <span>Page {{ page }} / {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="page === totalPages">Next</button>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+<div class="category-container">
+  <h2 class="page-title">Categories</h2>
+
+  <form [formGroup]="categoryForm" (ngSubmit)="saveCategory()" class="category-form">
+    <input type="text" formControlName="name" placeholder="Enter category name" />
+    <div class="form-buttons">
+      <button type="submit" class="btn-primary">
+        {{ selectedId ? 'Update' : 'Add' }}
+      </button>
+      <button type="button" class="btn-secondary" (click)="resetForm()">Reset</button>
+    </div>
+  </form>
+
+  <div class="search-box">
+    <div class="search-controls">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (keyup.enter)="search()"
+        placeholder="Search categories..."
+      />
+      <button class="btn-primary" (click)="search()">Search</button>
+    </div>
+
+    <!-- Sort Dropdown -->
+    <div class="sort-controls">
+      <select [(ngModel)]="sort" (change)="onSortChange()" class="sort-select">
+        <option value="">Sort by</option>
+        <option value="name_asc">Name (A → Z)</option>
+        <option value="name_desc">Name (Z → A)</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Table view for desktop -->
+  <table class="category-table" *ngIf="categories.length > 0; else noData">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Created</th>
+        <th>Updated</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cat of categories; let i = index">
+        <td>{{ i + 1 + (page - 1) * limit }}</td>
+        <td>{{ cat.name }}</td>
+        <td>{{ cat.createdAt | date : 'short' }}</td>
+        <td>{{ cat.updatedAt | date : 'short' }}</td>
+        <td>
+          <button class="btn-edit" (click)="editCategory(cat)">Edit</button>
+          <button class="btn-delete" (click)="deleteCategory(cat.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Card view for mobile -->
+  <div class="category-card" *ngFor="let cat of categories">
+    <div class="card-header">{{ cat.name }}</div>
+    <div><strong>Created:</strong> {{ cat.createdAt | date : 'short' }}</div>
+    <div><strong>Updated:</strong> {{ cat.updatedAt | date : 'short' }}</div>
+    <div class="card-actions">
+      <button class="btn-edit" (click)="editCategory(cat)">Edit</button>
+      <button class="btn-delete" (click)="deleteCategory(cat.id)">Delete</button>
+    </div>
+  </div>
+
+  <ng-template #noData>
+    <p class="no-data">No categories found.</p>
+  </ng-template>
+
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button (click)="prevPage()" [disabled]="page === 1">Prev</button>
+    <span>Page {{ page }} / {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="page === totalPages">Next</button>
+  </div>
+</div>
