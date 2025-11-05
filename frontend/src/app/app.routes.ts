@@ -8,6 +8,7 @@ import { CategoryListComponent } from './categories/category-list.component';
 import { LayoutComponent } from './layout/layout.component';
 import { ProductListComponent } from './products/product-list.component';
 
+
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -18,6 +19,7 @@ import { ProductListComponent } from './products/product-list.component';
     </div>
   `,
 })
+
 export class DashboardComponent {
   logout() {
     localStorage.removeItem('token');

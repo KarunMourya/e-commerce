@@ -56,8 +56,6 @@ export async function productListService(query) {
   page = parseInt(page);
   limit = parseInt(limit);
 
-  const offset = (page - 1) * limit;
-
   const where = {};
 
   if (search) {
@@ -81,10 +79,10 @@ export async function productListService(query) {
       attributes: ["id", "name"] 
     }],
     limit,
-    offset,
     order,
   });
-
+  console.log('rows: ', rows);
+  
   return {
     data: rows,
     pagination: {

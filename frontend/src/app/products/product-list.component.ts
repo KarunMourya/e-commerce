@@ -34,6 +34,8 @@ export class ProductListComponent implements OnInit {
   totalRecords = 0;
   limit = 10;
   message = '';
+  uploading = false;
+  uploadedJobId: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -67,7 +69,7 @@ export class ProductListComponent implements OnInit {
     this.productService.getAll(this.page, this.limit, this.searchTerm, this.sortOrder).subscribe({
       next: (res) => {
         this.products = res.data;
-        this.totalPages = Math.ceil(res.pagination.totalPages / this.limit);
+        this.totalPages = Math.ceil(res.pagination.totalRecords / this.limit);
         this.totalRecords = res.pagination.totalRecords;
         this.loading = false;
       },
@@ -136,6 +138,47 @@ export class ProductListComponent implements OnInit {
         });
       }
     });
+  }
+
+  downloadCSV() {
+    this.productService.exportCSV().subscribe({
+      next: (blob) => {
+        const a = document.createElement('a');
+        const url = window.URL.createObjectURL(blob);
+        a.href = url;
+        a.download = 'products.csv';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+      error: (err) => {
+        console.error('CSV download failed:', err);
+      },
+    });
+  }
+
+  onFileSelected(event: Event) {
+    const fileInput = event.target as HTMLInputElement;
+    const file = fileInput.files?.[0];
+    if (!file) return;
+
+    this.uploading = true;
+    this.message = '';
+
+    this.productService.bulkUpload(file).subscribe({
+      next: (res) => {
+        this.uploading = false;
+        this.uploadedJobId = res.jobId || null;
+        this.message = `${res.message} (Job ID: ${this.uploadedJobId || 'N/A'})`;
+      },
+      error: (err) => {
+        this.uploading = false;
+        this.message = 'Upload failed. Please try again.';
+      },
+    });
+  }
+
+  reloadProducts() {
+    this.loadProducts();
   }
 
   resetForm() {

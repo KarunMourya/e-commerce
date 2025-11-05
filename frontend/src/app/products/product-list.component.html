@@ -29,11 +29,34 @@
       <button class="btn-primary" (click)="search()">Search</button>
     </div>
 
-    <select [(ngModel)]="sortOrder" (change)="onSortChange()" class="sort-select">
-      <option value="">Sort by</option>
-      <option value="price_asc">Price (Low → High)</option>
-      <option value="price_desc">Price (High → Low)</option>
-    </select>
+    <div class="toolbar-actions">
+      <select [(ngModel)]="sortOrder" (change)="onSortChange()" class="sort-select">
+        <option value="">Sort by</option>
+        <option value="price_asc">Price (Low → High)</option>
+        <option value="price_desc">Price (High → Low)</option>
+      </select>
+
+      <div class="upload-wrapper">
+        <input
+          #fileInput
+          type="file"
+          accept=".csv"
+          style="display: none"
+          (change)="onFileSelected($event)"
+        />
+
+        <button
+          type="button"
+          class="btn-primary"
+          (click)="fileInput.click()"
+          [disabled]="uploading"
+        >
+          {{ uploading ? 'Uploading...' : 'Upload CSV' }}
+        </button>
+      </div>
+
+      <button class="btn-primary" (click)="downloadCSV()">Download Info</button>
+    </div>
   </div>
 
   <table class="product-table" *ngIf="products.length > 0; else noData">
@@ -62,8 +85,8 @@
         </td>
         <td>₹{{ prod.price }}</td>
         <td>{{ prod.category?.name }}</td>
-        <td>{{ prod.createdAt | date: 'short' }}</td>
-        <td>{{ prod.updatedAt | date: 'short' }}</td>
+        <td>{{ prod.createdAt | date : 'short' }}</td>
+        <td>{{ prod.updatedAt | date : 'short' }}</td>
         <td>
           <button class="btn-edit" (click)="editProduct(prod)">Edit</button>
           <button class="btn-delete" (click)="deleteProduct(prod.id)">Delete</button>
@@ -87,8 +110,8 @@
 
     <div class="card-body">
       <p><strong>Category:</strong> {{ prod.category?.name }}</p>
-      <p><strong>Created:</strong> {{ prod.createdAt | date: 'short' }}</p>
-      <p><strong>Updated:</strong> {{ prod.updatedAt | date: 'short' }}</p>
+      <p><strong>Created:</strong> {{ prod.createdAt | date : 'short' }}</p>
+      <p><strong>Updated:</strong> {{ prod.updatedAt | date : 'short' }}</p>
     </div>
 
     <div class="card-actions">
