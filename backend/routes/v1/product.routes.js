@@ -58,7 +58,7 @@ router.delete("/:id", authorizeUser, deleteProductController);
 
 router.post("/bulk-upload",authorizeUser, uploadMiddleware, bulkUploadProductsController);
 
-router.get("/document/export-products", exportProductsReport);
+router.get("/document/export-products",authorizeUser, exportProductsReport);
 
 
 export default router;

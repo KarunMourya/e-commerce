@@ -107,7 +107,7 @@ export const getProductService = async (productId) => {
 };
 
 export const bulkUploadProductService = async (filePath) => {
-  const job = await productBulkQueue.add("bulk-upload", { filePath });
+  const job = await productBulkQueue.add(`bulk-upload-${Date.now()}`, { filePath });
   return job.id;
 };
 
